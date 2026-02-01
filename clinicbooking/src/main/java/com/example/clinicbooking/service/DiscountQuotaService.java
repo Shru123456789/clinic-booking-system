@@ -17,6 +17,7 @@ public class DiscountQuotaService {
         resetIfNewDay();
 
         if (todayCount.get() >= dailyLimit) {
+            //Discount quota exceeded - booking service will handle compensationS
             return false;
         }
         todayCount.incrementAndGet();
@@ -31,3 +32,4 @@ public class DiscountQuotaService {
         }
     }
 }
+
