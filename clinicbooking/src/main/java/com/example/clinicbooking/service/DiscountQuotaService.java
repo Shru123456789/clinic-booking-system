@@ -8,18 +8,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 public class DiscountQuotaService {
 
-    private int dailyLimit = 100;
+    private static final int DAILY_LIMIT = 100;
 
-    private AtomicInteger todayCount = new AtomicInteger(0);
+    private final AtomicInteger todayCount = new AtomicInteger(0);
     private LocalDate lastResetDate = LocalDate.now();
 
+    /**
+     * R1 Discount quota validation
+     * If quota is exceeded, BookingService performs compensation
+     */
     public synchronized boolean canApplyR1Discount() {
         resetIfNewDay();
 
-        if (todayCount.get() >= dailyLimit) {
-            //Discount quota exceeded - booking service will handle compensationS
+        // 🔴 COMPENSATION TRIGGER POINT
+        if (todayCount.get() >= DAILY_LIMIT) {
             return false;
         }
+
         todayCount.incrementAndGet();
         return true;
     }
