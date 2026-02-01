@@ -20,7 +20,7 @@ public class DiscountQuotaService {
     public synchronized boolean canApplyR1Discount() {
         resetIfNewDay();
 
-        // 🔴 COMPENSATION TRIGGER POINT
+        // COMPENSATION TRIGGER POINT
         if (todayCount.get() >= DAILY_LIMIT) {
             return false;
         }
@@ -37,4 +37,5 @@ public class DiscountQuotaService {
         }
     }
 }
+
 
